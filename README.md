@@ -1,4 +1,4 @@
-# lundekvam.io/panini
+# [lundekvam.io/panini](http://lundekvam.io/panini/)
 
 viser mine duplikater
 
