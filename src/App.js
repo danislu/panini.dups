@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <GitHubForkRibbon href="//www.google.com"
+        <GitHubForkRibbon href="https://github.com/danislu/panini.dups"
           target="_blank"
           position="right">
           Fork me on GitHub
