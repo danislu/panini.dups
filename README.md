@@ -1,5 +1,5 @@
-# panini.dups
+# lundekvam.io/panini
 
 viser mine duplikater
 
-se også; https://github.com/danislu/panini.util
+laget med https://github.com/danislu/panini.util
