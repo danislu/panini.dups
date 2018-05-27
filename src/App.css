@@ -41,7 +41,11 @@
 }
 
 .image { 
-  max-height: 250px;
+  max-height: 150px;
+}
+
+.big-image {
+  max-height: 70%;
 }
 
 @keyframes App-logo-spin {

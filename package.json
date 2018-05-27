@@ -9,7 +9,8 @@
     "react-dom": "^16.4.0",
     "react-github-fork-ribbon": "^0.5.1",
     "react-scripts": "1.1.4",
-    "react-social-icons": "^3.0.0"
+    "react-social-icons": "^3.0.0",
+    "react-tabs": "^2.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
