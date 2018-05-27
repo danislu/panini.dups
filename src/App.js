@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import { Image, Tab, Nav, NavItem, Modal, Button } from 'react-bootstrap';
-import { sortedUniqBy, sortBy } from 'lodash';
+import { sortedUniqBy, sortBy, groupBy, reverse, flatMap, map, sumBy } from 'lodash';
 import { compose } from 'lodash/fp';
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { SocialIcon } from 'react-social-icons';
 import './App.css';
 import players from './players';
 
-const sortDistinctByName = (array) => sortedUniqBy(array, a => a.name);
+//const sortDistinctByName = (array) => sortedUniqBy(array, a => a.name);
 
 const sortByName = list => compose(
-  sortDistinctByName,
-  array => sortBy(array, a => a.name),
+  array => sortBy(array, a => parseInt(a.name.substring(0,3), 10)),
+  array => map(array, ar => ({ ...ar[0], count: ar.length })),
+  obj => Object.values(obj),
+  array => groupBy(array, a => a.name.substring(0,3)),
 )(list);
 
 const Players = ({ players, onClick }) => (
   <div className="wrapper">
     {
       players.map((player, idx) => {
-        const { name, url } = player;
+        const { name, url, count } = player;
         return (<div key={name} className="item" onClick={() => onClick(idx)}
         >
           <Image className="image" src={url} alt={name} thumbnail />
           <h4>{name}</h4>
+          { count > 1 && <h6>{count} stk</h6> }
+
         </div>);
       })
     }
@@ -58,8 +62,8 @@ class App extends Component {
         >
           <div>
             <Nav bsStyle="pills" justified>
-              <NavItem eventKey={0}>Duplikater ({duplicates.length})</NavItem>
-              <NavItem eventKey={1}>Mangler ({missing.length})</NavItem>
+              <NavItem eventKey={0}>Duplikater ({sumBy(duplicates, a => a.count)})</NavItem>
+              <NavItem eventKey={1}>Mangler ({sumBy(missing, a => a.count)})</NavItem>
             </Nav>
             <Tab.Content animation>
               <Tab.Pane eventKey={0}>
