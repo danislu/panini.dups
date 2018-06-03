@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image, Tab, Nav, NavItem, Modal, Button } from 'react-bootstrap';
-import { sortedUniqBy, sortBy, groupBy, reverse, flatMap, map, sumBy } from 'lodash';
+import { Image, Tab, Nav, NavItem, Modal } from 'react-bootstrap';
+import { sortBy, groupBy, map, sumBy } from 'lodash';
 import { compose } from 'lodash/fp';
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { SocialIcon } from 'react-social-icons';
@@ -12,7 +12,7 @@ const sortByName = list => compose(
   array => map(array, ar => ({ ...ar[0], count: ar.length })),
   obj => Object.values(obj),
   array => groupBy(array, a => a.name.substring(0,3)),
-  items => items.map(i => players.all.find(p => p.name.substring(0,3) == i))
+  items => items.map(i => players.all.find(p => p.name.substring(0,3) === i))
 )(list);
 
 const Players = ({ players, onClick }) => (
