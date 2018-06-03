@@ -7,13 +7,12 @@ import { SocialIcon } from 'react-social-icons';
 import './App.css';
 import players from './players';
 
-//const sortDistinctByName = (array) => sortedUniqBy(array, a => a.name);
-
 const sortByName = list => compose(
   array => sortBy(array, a => parseInt(a.name.substring(0,3), 10)),
   array => map(array, ar => ({ ...ar[0], count: ar.length })),
   obj => Object.values(obj),
   array => groupBy(array, a => a.name.substring(0,3)),
+  items => items.map(i => players.all.find(p => p.name.substring(0,3) == i))
 )(list);
 
 const Players = ({ players, onClick }) => (
