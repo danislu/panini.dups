@@ -52,6 +52,7 @@ class App extends Component {
         <header className="App-header">
           <img src={"https://store.paniniamerica.net/media/catalog/category/WC-coming-soon-web-banner.jpg"} className="App-logo" alt="logo" />
           <h1 className="App-title">Panini boken min</h1>
+          <h1 className="App-undertitle">03.06.2018</h1>
         </header>
 
         <Tab.Container
