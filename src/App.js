@@ -6,8 +6,10 @@ import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { SocialIcon } from 'react-social-icons';
 import './App.css';
 import players from './players';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CopyIcon from './copy';
 
-const sortByName = list => compose(
+const mapToPlayer = list => compose(
   array => sortBy(array, a => parseInt(a.name.substring(0,3), 10)),
   array => map(array, ar => ({ ...ar[0], count: ar.length })),
   obj => Object.values(obj),
@@ -16,31 +18,43 @@ const sortByName = list => compose(
 )(list);
 
 const Players = ({ players, onClick }) => (
-  <div className="wrapper">
-    {
-      players.map((player, idx) => {
-        const { name, url, count } = player;
-        return (<div key={name} className="item" onClick={() => onClick(idx)}
-        >
-          <Image className="image" src={url} alt={name} thumbnail />
-          <h4>{name}</h4>
-          { count > 1 && <h6>{count} stk</h6> }
+  <div className="outerWrapper">
+    <div className="copyButton">
+      <CopyToClipboard text={players.lenght !== 0 ? players.map(({ name }) => name.substring(0,3)).join(',') : ' ' }
+        onCopy={() => console.log('copied')}>
+        <button><CopyIcon /></button>
+      </CopyToClipboard>
+    </div>
+    <div className="wrapper">
+      {
+        players.map((player, idx) => {
+          const { name, url, count } = player;
+          return (<div key={name} className="item" onClick={() => onClick(idx)}
+          >
+            <Image className="image" src={url} alt={name} thumbnail />
+            <h4>{name}</h4>
+            { count > 1 && <h6>{count} stk</h6> }
 
-        </div>);
-      })
-    }
+          </div>);
+        })
+      }
+    </div>
   </div>
 );
+
+const existitsIn = items => a => items.length === 0 || items.some(i => i === a);
+
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { key: 0 };
+    this.state = { key: 0, items: [] };
   }
-  
+
   render() {
-    const duplicates = sortByName(players.duplicates);
-    const missing = sortByName(players.missing);
+    const { items } = this.state;
+    const duplicates = mapToPlayer(players.duplicates.filter(existitsIn(items)));
+    const missing = mapToPlayer(players.missing.filter(existitsIn(items)));
   
     return (
       <div className="App">
@@ -53,6 +67,15 @@ class App extends Component {
           <img src={"https://store.paniniamerica.net/media/catalog/category/WC-coming-soon-web-banner.jpg"} className="App-logo" alt="logo" />
           <h1 className="App-title">Panini boken min</h1>
           <h1 className="App-undertitle">03.06.2018</h1>
+          <div className="filterBox">
+            <textarea rows="2" wrap="hard" placeholder="filter med nummer, csv" onChange={e => {
+              const value = e.target.value.trim();
+              return this.setState({
+                ...this.state,
+                items: value === '' ? [] : value.split(',')
+              });
+            }} />
+          </div>
         </header>
 
         <Tab.Container

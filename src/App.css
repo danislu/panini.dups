@@ -27,6 +27,13 @@
   font-size: large;
 }
 
+.outerWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em 0;
+}
+
 .wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -56,4 +63,15 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.filterBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+textarea {
+  color: black;
+  /* resize: none; */
 }
